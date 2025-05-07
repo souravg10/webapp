@@ -13,6 +13,19 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4567:4567"
+    volumes:
+      - .:/webapp/
+      - /webapp/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - db
 
 volumes:
   db_data:

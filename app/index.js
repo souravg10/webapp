@@ -1,19 +1,14 @@
 const express = require('express')
 const pg = require('pg')
+const config = require('./config.js'); // Import the configuration file
 const app = express()
 const path = require('path')
-const port = 4567
+const port = config.port; // Use the port from the configuration file
 module.exports = { port };
 app.use(express.json())
 
 const { Client } = pg
-const client = new Client({
-    user: 'sourav',
-    host: 'localhost',
-    database: 'testdb',
-    password: 'pwd123',
-    port: 5432,
-})
+const client = new Client(config.database)
 
 async function connectToDatabase() {
     try {
